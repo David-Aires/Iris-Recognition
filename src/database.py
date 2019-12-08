@@ -74,11 +74,12 @@ def compare(desc):
 				if m.distance < 0.75*n.distance:
 					good.append([m])
             
-			print(len(good))
 			if len(good)>= 44:
-				print(row[1])
-				print(row[2])
+				nom = row[1]
+				prenom = row[2]
+				ratio = len(good)
 				break
+               
                         
 			
 	except sqlite3.OperationalError:
@@ -87,4 +88,12 @@ def compare(desc):
 		print("Erreur inconnue")
 		conn.rollback()
 	finally:
-		conn.close()  
+            conn.close()
+            try:
+               if nom:
+                return(nom,prenom,ratio)
+            except NameError:
+               return("","","")
+	
+    
+        

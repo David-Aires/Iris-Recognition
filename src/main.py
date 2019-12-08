@@ -14,16 +14,34 @@ import binarization
 
 kp=[]
 
+
+def show_match(nom,prenom,ratio):
+   match_label.config(text='Match Found!',fg='green')
+   match_label.configure()
+
+   nom_label.config(text=nom,fg='green')
+   nom_label.configure()
+
+   prenom_label.config(text=prenom,fg='green')
+   prenom_label.configure()
+
+   ratio_label.config(text=ratio,fg='green')
+   ratio_label.configure()
+
 def compare():
    if kp==[]:
       try:
          if filepath:
             analyse()
-            database.compare(desc)
+            nom,prenom,ratio = database.compare(desc)
       except NameError:
          showwarning('erreur', 'Veuillez selectionner une image')
    else:
-      database.compare(desc)
+      nom,prenom,ratio = database.compare(desc)
+
+   
+   if nom!="":
+      show_match(nom,prenom,ratio)
    
 
 def send_data():
@@ -36,7 +54,6 @@ def input_win():
    global E1
    global E2
    global window
-   print(desc.size)
    window = tk.Toplevel(fenetre)
    window.title("Iris Authentification - Ajout valeur")
    window.resizable(width=False, height=False)
@@ -102,6 +119,14 @@ def import_image():
     global filepath
     default_analyse.config(text='Non effectué',fg='red')
     default_analyse.configure()
+    match_label.config(text='No Match!',fg='red')
+    match_label.configure()
+    nom_label.config(text='No Match!',fg='red')
+    nom_label.configure()
+    prenom_label.config(text='No Match!',fg='red')
+    prenom_label.configure()
+    ratio_label.config(text='No Match!',fg='red')
+    ratio_label.configure()
     filepath = askopenfilename(title="Ouvrir une image",filetypes=[('jpg files','.jpg'),('all files','.*')])
     canvas_image.delete(txt)
     image = Image.open(filepath)
@@ -173,6 +198,25 @@ Button(fenetre, text ='Comparer',relief=GROOVE,height = 5, width = 33,command=co
 Label(fenetre, text="Etat Analyse: ").place(relx=0.72, rely=0.10, anchor=CENTER)
 default_analyse= Label(fenetre, text="Non effectué",fg="red")
 default_analyse.place(relx=0.82, rely=0.10, anchor=CENTER)
+
+
+l = LabelFrame(fenetre, text="Matching", padx=20, pady=25)
+l.place(relx=0.78, rely=0.25, anchor=CENTER)
+Label(l, text="Status:").grid(row=1,column=0)
+match_label = Label(l, text="No Match!",fg="red")
+match_label.grid(row=1,column=1)
+
+Label(l, text="Nom:").grid(row=2,column=0)
+nom_label = Label(l, text="No Match!",fg="red")
+nom_label.grid(row=2,column=1)
+
+Label(l, text="Prenom:").grid(row=3,column=0)
+prenom_label = Label(l, text="No Match!",fg="red")
+prenom_label.grid(row=3,column=1)
+
+Label(l, text="Ratio:").grid(row=4,column=0)
+ratio_label = Label(l, text="No Match!",fg="red")
+ratio_label.grid(row=4,column=1)
 
 n = TTK.Notebook(fenetre,width=width_W,height=(int(height_W/2)))
 onglet1 = TTK.Frame(n)
