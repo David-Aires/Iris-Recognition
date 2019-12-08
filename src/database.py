@@ -71,11 +71,11 @@ def compare(desc):
 			matches = bf.knnMatch(desc,row[4],k=2)
 			good = []
 			for m,n in matches:
-				if m.distance < 0.9*n.distance:
+				if m.distance < 0.75*n.distance:
 					good.append([m])
             
 			print(len(good))
-			if len(good)>= 42:
+			if len(good)>= 44:
 				print(row[1])
 				print(row[2])
 				break
